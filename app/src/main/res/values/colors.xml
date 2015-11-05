@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="tangerine">#f49052</color>
+    <color name="sunset">#d3673b</color>
+    <color name="signal">#e9a44d</color>
+    <color name="lemon">#f7ca31</color>
+    <color name="cyan">#28b2da</color>
+    <color name="ocean">#1678b5</color>
+    <color name="royal">#7a549a</color>
+    <color name="leaf">#388d46</color>
+    <color name="kermit">#79bd4b</color>
+    <color name="mauve">#c983b8</color>
+    <color name="blush">#cf599d</color>
+    <color name="accent_gray">#929292</color>
+    <color name="logo_text_gray">#414141</color>
+    <color name="dialog_bg_gray">#353535</color>
+    <color name="background_gray">#F2F2F2</color>
+</resources>
+
