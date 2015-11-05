@@ -11,6 +11,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -18,7 +19,9 @@ import java.io.FileNotFoundException;
 
 public class MainActivity extends AppCompatActivity implements PhotoOptionsFragment.PhotoOptionsDialogListener{
 
-    private ImageView mImageView;
+    private CameraOverlayPreview cameraOverlayView;
+    // private ImageView photoTakenView;
+    private ImageView photoChosenView;
     private FloatingActionButton photoButton;
 
     @Override
@@ -26,7 +29,9 @@ public class MainActivity extends AppCompatActivity implements PhotoOptionsFragm
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mImageView = (ImageView) findViewById(R.id.imageViewPhotoTaken);
+        cameraOverlayView = (CameraOverlayPreview) findViewById(R.id.cameraOverlayPreview);
+        // photoTakenView = (ImageView) findViewById(R.id.imageViewPhotoTaken);
+        photoChosenView = (ImageView) findViewById(R.id.imageViewPhotoChosen);
 
         photoButton = (FloatingActionButton) findViewById(R.id.fab);
         photoButton.setOnClickListener(new View.OnClickListener() {
@@ -68,7 +73,8 @@ public class MainActivity extends AppCompatActivity implements PhotoOptionsFragm
     @Override
     public void onTakePhotoClick(DialogFragment dialog) {
         System.out.println("called onTakePhotoClick");
-        dispatchTakePictureIntent();
+        // dispatchTakePictureIntent();
+        cameraOverlayView.capturePhoto();
     }
 
     @Override
@@ -111,14 +117,14 @@ public class MainActivity extends AppCompatActivity implements PhotoOptionsFragm
         if (requestCode == REQUEST_IMAGE_CAPTURE) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-            mImageView.setImageBitmap(imageBitmap);
+            photoChosenView.setImageBitmap(imageBitmap);
         }
         else if (requestCode == REQUEST_PHOTO_GALLERY) {
             Uri targetUri = data.getData();
             Bitmap bitmap;
             try {
                 bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
-                mImageView.setImageBitmap(bitmap);
+                photoChosenView.setImageBitmap(bitmap);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }

@@ -35,8 +35,13 @@
         app:layout_anchor="@id/viewA"
         app:layout_anchorGravity="bottom|right|end"/>
 
+    <aprikat.androidphototest.CameraOverlayPreview
+        android:id="@+id/cameraOverlayPreview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <ImageView
-        android:id="@+id/imageViewPhotoTaken"
+        android:id="@+id/imageViewPhotoChosen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
