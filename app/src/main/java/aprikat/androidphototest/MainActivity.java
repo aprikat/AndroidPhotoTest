@@ -2,6 +2,8 @@ package aprikat.androidphototest;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
@@ -11,6 +13,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+
+import java.io.FileNotFoundException;
 
 public class MainActivity extends AppCompatActivity implements PhotoOptionsFragment.PhotoOptionsDialogListener{
 
@@ -70,13 +74,14 @@ public class MainActivity extends AppCompatActivity implements PhotoOptionsFragm
     @Override
     public void onUploadPhotoClick(DialogFragment dialog) {
         System.out.println("called onUploadPhotoClick");
+        dispatchPhotoGalleryIntent();
     }
 
     /**
-     * CAMERA STUFF
+     * CAMERA
      */
 
-    static final int REQUEST_IMAGE_CAPTURE = 1;
+    static final int REQUEST_IMAGE_CAPTURE = 0;
 
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -85,12 +90,42 @@ public class MainActivity extends AppCompatActivity implements PhotoOptionsFragm
         }
     }
 
+    /**
+     * PHOTO GALLERY
+     */
+
+    static final int REQUEST_PHOTO_GALLERY = 1;
+
+    private void dispatchPhotoGalleryIntent() {
+        Intent photoGalleryIntent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(photoGalleryIntent, REQUEST_PHOTO_GALLERY);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+        if (resultCode != RESULT_OK) {
+            System.out.println("annie are you ok");
+            return;
+        }
+        if (requestCode == REQUEST_IMAGE_CAPTURE) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             mImageView.setImageBitmap(imageBitmap);
+        }
+        else if (requestCode == REQUEST_PHOTO_GALLERY) {
+            Uri targetUri = data.getData();
+            Bitmap bitmap;
+            try {
+                bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
+                mImageView.setImageBitmap(bitmap);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            System.out.println("unknown request code");
+            return;
         }
     }
 }
