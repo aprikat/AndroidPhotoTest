@@ -36,7 +36,7 @@
         app:layout_anchorGravity="bottom|right|end"/>
 
     <ImageView
-        android:id="@+id/imageViewPhotoTaken"
+        android:id="@+id/imageViewPhoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
