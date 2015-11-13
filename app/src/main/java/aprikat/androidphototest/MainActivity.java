@@ -29,10 +29,12 @@ public class MainActivity extends AppCompatActivity implements PhotoOptionsFragm
         mImageView = (ImageView) findViewById(R.id.imageViewPhotoTaken);
 
         photoButton = (FloatingActionButton) findViewById(R.id.fab);
+        // photoButton.setRippleColor(R.color.mauve);
         photoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 System.out.println("hi");
+                photoButton.setElevation(12);
                 showPhotoOptionsDialog();
             }
         });
@@ -61,8 +63,9 @@ public class MainActivity extends AppCompatActivity implements PhotoOptionsFragm
     }
 
     public void showPhotoOptionsDialog() {
-        DialogFragment dialog = new PhotoOptionsFragment();
-        dialog.show(getSupportFragmentManager(), "PhotoOptionsFragment");
+        DialogFragment dialogFragment = new PhotoOptionsFragment();
+        dialogFragment.show(getSupportFragmentManager(), "PhotoOptionsFragment");
+        // dialogFragment.getDialog().getWindow().setLayout(600, 400);
     }
 
     @Override

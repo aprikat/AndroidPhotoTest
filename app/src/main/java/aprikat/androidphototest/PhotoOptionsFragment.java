@@ -17,21 +17,21 @@ public class PhotoOptionsFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Upload a photo")
-                .setItems(photoOptions, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which) {
-                            case 0:
-                                mListener.onTakePhotoClick(PhotoOptionsFragment.this);
-                                break;
-                            case 1:
-                                mListener.onUploadPhotoClick(PhotoOptionsFragment.this);
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                });
+        // builder.setTitle("Upload a photo");
+        builder.setItems(photoOptions, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case 0:
+                        mListener.onTakePhotoClick(PhotoOptionsFragment.this);
+                        break;
+                    case 1:
+                        mListener.onUploadPhotoClick(PhotoOptionsFragment.this);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
         return builder.create();
     }
 
@@ -59,6 +59,12 @@ public class PhotoOptionsFragment extends DialogFragment {
             throw new ClassCastException(activity.toString()
                     + " must implement PhotoOptionsDialogListener");
         }
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        getDialog().getWindow().setLayout(700, 440);
     }
 
 }
